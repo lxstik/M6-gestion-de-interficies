@@ -1,5 +1,21 @@
-import localStorageFunction, { noResueltos, resueltos } from "./localStorage/functions";
+import localStorageFunction from './localStorage/functions';
+import dades_usuaris from './localStorage/usuarios';
+
 localStorageFunction();
+
+function ComprobarUsuario() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  // Comprobar si el usuario existe en el array dades_usuaris
+  const usuario = dades_usuaris.find(user => user.correo === email && user.contrasenya.toString() === password);
+
+  if (usuario) {
+    alert('Inicio de sesión exitoso');
+  } else {
+    alert('Correo electrónico o contraseña incorrectos');
+  }
+}
 
 function InicioSesion() {
   return (
@@ -7,7 +23,7 @@ function InicioSesion() {
       <main className="container mt-5">
         <h1>Inicio de Sesión</h1>
         <div className="mt-4">
-          <form>
+          <form onSubmit={(e) => { e.preventDefault(); ComprobarUsuario(); }}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Correo electrónico</label>
               <input type="email" className="form-control" id="email" />

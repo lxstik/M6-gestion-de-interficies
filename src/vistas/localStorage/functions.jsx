@@ -27,4 +27,7 @@ export default function localStorageFunction() {
     console.log(resueltos);
 }
 
+
+
+
 export { noResueltos, resueltos };
