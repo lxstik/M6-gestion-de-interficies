@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Panel from './vistas/Panel';
 import InicioSesion from './vistas/InicioSesion';
 import Registro from './vistas/Registro';
-import './styles/index.scss';
+import './styles/bootstrap.scss';
 
 function App() {
   return (

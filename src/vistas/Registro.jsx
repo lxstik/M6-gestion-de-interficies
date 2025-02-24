@@ -1,5 +1,5 @@
-import React from 'react';
-
+import localStorageFunction, { noResueltos, resueltos } from "./localStorage/functions";
+localStorageFunction();
 
 function Registro() {
   return (

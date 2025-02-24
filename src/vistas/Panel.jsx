@@ -1,29 +1,6 @@
-import React from 'react';
-import dades_tiquets from './localStorage/tickets';
-import dades_usuaris from './localStorage/usuarios';
-
-//convertir array al string y guardarlo en una variable
-//localStorage.setItem('dades_tiquets', JSON.stringify(dades_tiquets));
-//localStorage.setItem('dades_usuaris', JSON.stringify(dades_usuaris));
-
-//sacarlos del string
-const tiquetsJSON = localStorage.getItem("dades_tiquets");
-const usuarisJSON = localStorage.getItem("dades_usuaris");
-//console.log(tiquetsJSON)
-
-//convertirlo a un objeto¿
-const dades_tiquets_obj = JSON.parse(tiquetsJSON);
- const dades_usuaris_obj = JSON.parse(usuarisJSON);
-//console.log(dades_tiquets_obj);
-
-
-const noResueltos = dades_tiquets_obj.filter(ticket => ticket.estado == "no resuelto");
-const resueltos = dades_tiquets_obj.filter(ticket => ticket.estado == "resuelto");
-console.log(dades_usuaris_obj);
-console.log(noResueltos)
-console.log(resueltos)
-
-
+// import React from 'react';
+import localStorageFunction, { noResueltos, resueltos } from "./localStorage/functions";
+localStorageFunction();
 
 function Panel() {
   return (
@@ -80,26 +57,22 @@ function Panel() {
             </tr>
           </thead>
           <tbody>
-            {resueltos.map(ticket => {
-              return (
-                <tr key={ticket.codigo}>
-                  <td>{ticket.codigo}</td>
-                  <td>{ticket.fecha}</td>
-                  <td>{ticket.fechaResolucion}</td>
-                  <td>{ticket.aula}</td>
-                  <td>{ticket.grupo}</td>
-                  <td>{ticket.ordenador}</td>
-                  <td>{ticket.descripcion}</td>
-                  <td>{ticket.alumno}</td>
-                  <td><button className="btn btn-info" title="Ver comentarios"><i className="bi bi-chat-left-text"></i></button></td>
-                  <td><button className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
-                </tr>
-              );
-            })}
+            {resueltos.map(ticket => (
+              <tr key={ticket.codigo}>
+                <td>{ticket.codigo}</td>
+                <td>{ticket.fecha}</td>
+                <td>{ticket.fechaResolucion}</td>
+                <td>{ticket.aula}</td>
+                <td>{ticket.grupo}</td>
+                <td>{ticket.ordenador}</td>
+                <td>{ticket.descripcion}</td>
+                <td>{ticket.alumno}</td>
+                <td><button className="btn btn-info" title="Ver comentarios"><i className="bi bi-chat-left-text"></i></button></td>
+                <td><button className="btn btn-danger" title="Eliminar ticket"><i className="bi bi-trash3"></i></button></td>
+              </tr>
+            ))}
           </tbody>
-
         </table>
-
       </main>
 
       {/* Modal */}
