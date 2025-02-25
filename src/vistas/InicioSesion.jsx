@@ -1,39 +1,45 @@
-import localStorageFunction from './localStorage/functions';
-import dades_usuaris from './localStorage/usuarios';
+import React, { useState } from 'react';
+import { ComprobarUsuario } from './localStorage/functions';
 
-localStorageFunction();
+function InicioSesion({ setUsuarioActual }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-function ComprobarUsuario() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  // Comprobar si el usuario existe en el array dades_usuaris
-  const usuario = dades_usuaris.find(user => user.correo === email && user.contrasenya.toString() === password);
-
-  if (usuario) {
-    alert('Inicio de sesión exitoso');
-  } else {
-    alert('Correo electrónico o contraseña incorrectos');
+  function handleLogin() {
+    // Llamar a la función ComprobarUsuario con los valores de email y password
+    ComprobarUsuario(email, password, setUsuarioActual);
   }
-}
 
-function InicioSesion() {
   return (
     <>
       <main className="container mt-5">
         <h1>Inicio de Sesión</h1>
         <div className="mt-4">
-          <form onSubmit={(e) => { e.preventDefault(); ComprobarUsuario(); }}>
+          <div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Correo electrónico</label>
-              <input type="email" className="form-control" id="email" />
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Contraseña</label>
-              <input type="password" className="form-control" id="password" />
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <input type="submit" className="mt-4 w-100 btn btn-primary" value="Entrar" id="enviar" />
-          </form>
+            <button onClick={handleLogin} className="mt-4 w-100 btn btn-primary" id="enviar">
+              Entrar
+            </button>
+          </div>
         </div>
       </main>
 

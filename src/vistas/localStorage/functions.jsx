@@ -3,6 +3,8 @@ import dades_usuaris from './usuarios';
 
 let noResueltos = [];
 let resueltos = [];
+let usuarioActual = null;
+let fotoUsuarioActual = null;
 
 export default function localStorageFunction() {
     // Convertir array al string y guardarlo en una variable
@@ -19,15 +21,43 @@ export default function localStorageFunction() {
     const dades_tiquets_obj = JSON.parse(tiquetsJSON);
     const dades_usuaris_obj = JSON.parse(usuarisJSON);
 
-    noResueltos = dades_tiquets_obj.filter(ticket => ticket.estado === "no resuelto");
-    resueltos = dades_tiquets_obj.filter(ticket => ticket.estado === "resuelto");
+    noResueltos = dades_tiquets_obj.filter(ticket => ticket.estado == "no resuelto");
+    resueltos = dades_tiquets_obj.filter(ticket => ticket.estado == "resuelto");
 
     console.log(dades_usuaris_obj);
     console.log(noResueltos);
     console.log(resueltos);
 }
 
+export function ComprobarUsuario(email, password, setUsuarioActual) {
+    //comprobar si el usuario existe en el array dades_usuaris, antes creo una variable usuario
+    let usuario;
+    for (let i = 0; i < dades_usuaris.length; i++) {
+        const user = dades_usuaris[i];
+        if (user.correo == email && user.contrasenya == password) {
+            usuario = user;
+        }
+    }
 
+    if (usuario) {
+        usuarioActual = usuario.nombre;
+        fotoUsuarioActual = usuario.imagen;
+        alert('Inicio de sesión exitoso');
+        setUsuarioActual(usuarioActual);
+        // Guardar la información del usuario en localStorage
+        localStorage.setItem('usuarioActual', JSON.stringify(usuario));
+        return usuarioActual;
+    } else {
+        alert('Correo electrónico o contraseña incorrectos');
+    }
+}
 
+export function RecuperarUsuario(setUsuarioActual) {
+    const usuario = localStorage.getItem('usuarioActual');
+    if (usuario) {
+        const usuarioObj = JSON.parse(usuario);
+        setUsuarioActual(usuarioObj.nombre);
+    }
+}
 
-export { noResueltos, resueltos };
+export { noResueltos, resueltos, usuarioActual, fotoUsuarioActual };
