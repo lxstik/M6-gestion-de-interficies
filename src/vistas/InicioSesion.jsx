@@ -5,7 +5,8 @@ function InicioSesion({ setUsuarioActual }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleLogin() {
+  function handleLogin(event) {
+    event.preventDefault();
     // Llamar a la función ComprobarUsuario con los valores de email y password
     ComprobarUsuario(email, password, setUsuarioActual);
   }
@@ -15,7 +16,7 @@ function InicioSesion({ setUsuarioActual }) {
       <main className="container mt-5">
         <h1>Inicio de Sesión</h1>
         <div className="mt-4">
-          <div>
+          <form onSubmit={handleLogin}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Correo electrónico</label>
               <input
@@ -36,10 +37,10 @@ function InicioSesion({ setUsuarioActual }) {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button onClick={handleLogin} className="mt-4 w-100 btn btn-primary" id="enviar">
+            <button type="submit" className="mt-4 w-100 btn btn-primary" id="enviar">
               Entrar
             </button>
-          </div>
+          </form>
         </div>
       </main>
 

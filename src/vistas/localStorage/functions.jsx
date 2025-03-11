@@ -30,14 +30,10 @@ export default function localStorageFunction() {
 }
 
 export function ComprobarUsuario(email, password, setUsuarioActual) {
-    //comprobar si el usuario existe en el array dades_usuaris, antes creo una variable usuario
-    let usuario;
-    for (let i = 0; i < dades_usuaris.length; i++) {
-        const user = dades_usuaris[i];
-        if (user.correo == email && user.contrasenya == password) {
-            usuario = user;
-        }
-    }
+    // Obtener los usuarios del localStorage
+    const usuarios = JSON.parse(localStorage.getItem('dades_usuaris')) || [];
+    // Comprobar si el usuario existe en el array de usuarios
+    const usuario = usuarios.find(user => user.correo === email && user.contrasenya === password);
 
     if (usuario) {
         usuarioActual = usuario.nombre;
@@ -50,6 +46,35 @@ export function ComprobarUsuario(email, password, setUsuarioActual) {
     } else {
         alert('Correo electrónico o contraseña incorrectos');
     }
+}
+
+export function RegistrarUsuario(nombre, email, password) {
+    // Obtener los usuarios del localStorage
+    const usuarios = JSON.parse(localStorage.getItem('dades_usuaris')) || [];
+    // Verificar si el usuario ya existe
+    const usuarioExistente = usuarios.find(user => user.correo === email);
+    if (usuarioExistente) {
+        alert('El correo electrónico ya está registrado');
+        return;
+    }
+
+    // Crear un objeto con los datos del usuario
+    const usuario = {
+        nombre: nombre,
+        correo: email,
+        contrasenya: password
+    };
+    // Añadir el usuario al array de usuarios
+    usuarios.push(usuario);
+    // Guardar el array de usuarios en localStorage
+    localStorage.setItem('dades_usuaris', JSON.stringify(usuarios));
+    alert('Usuario registrado con éxito');
+    // Guardar la información del usuario en localStorage
+    localStorage.setItem('usuarioActual', JSON.stringify(usuario));
+}
+
+export function obtenerUsuarios() {
+    return JSON.parse(localStorage.getItem('dades_usuaris')) || [];
 }
 
 export function RecuperarUsuario(setUsuarioActual) {

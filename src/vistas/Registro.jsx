@@ -1,24 +1,56 @@
-import localStorageFunction, { noResueltos, resueltos } from "./localStorage/functions";
+import React, { useState } from 'react';
+import localStorageFunction, { RegistrarUsuario, obtenerUsuarios } from "./localStorage/functions";
 localStorageFunction();
 
 function Registro() {
+  const [nombre, setNombre] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  function handleRegister(event) {
+    event.preventDefault();
+    // Llamar a la función RegistrarUsuario con los valores de nombre, email y password
+    RegistrarUsuario(nombre, email, password);
+    // Obtener los usuarios registrados y mostrarlos en la consola
+    const usuarios = obtenerUsuarios();
+    console.log(usuarios);
+  }
+
   return (
     <>
       <main className="container mt-5">
         <h1>Registro</h1>
         <div className="mt-4">
-          <form>
+          <form onSubmit={handleRegister}>
             <div className="mb-3">
               <label htmlFor="nombre" className="form-label">Nombre</label>
-              <input type="text" className="form-control" id="nombre" />
+              <input
+                type="text"
+                className="form-control"
+                id="nombre"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">Correo electrónico</label>
-              <input type="email" className="form-control" id="email" />
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">Contraseña</label>
-              <input type="password" className="form-control" id="password" />
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <input type="submit" className="mt-4 w-100 btn btn-primary" value="Registrar" id="enviar" />
           </form>
