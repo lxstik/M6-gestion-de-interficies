@@ -8,10 +8,15 @@ import { RecuperarUsuario } from './vistas/localStorage/functions';
 
 function App() {
   const [usuarioActual, setUsuarioActual] = useState(null);
-  
+
   useEffect(() => {
     RecuperarUsuario(setUsuarioActual);
   }, []);
+
+  function cerrarSesion() {
+    setUsuarioActual(null);
+    localStorage.removeItem('usuarioActual');
+  }
 
   return (
     <>
@@ -26,9 +31,22 @@ function App() {
                 <Link to="/Registro" className="btn btn-secondary ms-2">REGISTRO</Link>
               </div>
               <div>
-                <span>
-                  {usuarioActual ? usuarioActual : "Incógnito"}
-                </span>
+                {(() => {
+                  if (usuarioActual) {
+                    return (
+                      <div>
+                        <span>{usuarioActual}</span>
+                        <button onClick={cerrarSesion} className="btn btn-secondary ms-2">Cerrar Sesión</button>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div>
+                        <span>Incógnito</span>
+                      </div>
+                    );
+                  }
+                })()}
               </div>
             </div>
           </nav>
