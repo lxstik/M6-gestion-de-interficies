@@ -7,7 +7,6 @@ function InicioSesion({ setUsuarioActual }) {
 
   function handleLogin(event) {
     event.preventDefault();
-    // Llamar a la función ComprobarUsuario con los valores de email y password
     ComprobarUsuario(email, password, setUsuarioActual);
   }
 

@@ -7,11 +7,9 @@ function Registro() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleRegister(event) {
+  function RegistroFuncion(event) {
     event.preventDefault();
-    // Llamar a la función RegistrarUsuario con los valores de nombre, email y password
     RegistrarUsuario(nombre, email, password);
-    // Obtener los usuarios registrados y mostrarlos en la consola
     const usuarios = obtenerUsuarios();
     console.log(usuarios);
   }
@@ -21,7 +19,7 @@ function Registro() {
       <main className="container mt-5">
         <h1>Registro</h1>
         <div className="mt-4">
-          <form onSubmit={handleRegister}>
+          <form onSubmit={RegistroFuncion}>
             <div className="mb-3">
               <label htmlFor="nombre" className="form-label">Nombre</label>
               <input
