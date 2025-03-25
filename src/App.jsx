@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Panel from './vistas/Panel';
 import InicioSesion from './vistas/InicioSesion';
 import Registro from './vistas/Registro';
+import Comentarios from './vistas/Comentarios'; // Importar la vista Comentarios
 import './styles/bootstrap.scss';
 import { RecuperarUsuario } from './vistas/localStorage/functions';
 
@@ -40,7 +41,7 @@ function App() {
               <div>
                 {usuarioActual ? (
                   <>
-                    <span>{usuarioActual}</span>
+                    <span>{usuarioActual.nombre}</span>
                     <button onClick={cerrarSesion} className="btn btn-secondary ms-2">Cerrar Sesión</button>
                   </>
                 ) : (
@@ -55,6 +56,7 @@ function App() {
             <Route path="/Panel" element={usuarioActual ? <Panel /> : <InicioSesion setUsuarioActual={setUsuarioActual} />} />
             <Route path="/InicioSesion" element={!usuarioActual ? <InicioSesion setUsuarioActual={setUsuarioActual} /> : <Panel />} />
             <Route path="/Registro" element={!usuarioActual ? <Registro /> : <Panel />} />
+            <Route path="/comentarios/:id" element={usuarioActual ? <Comentarios /> : <InicioSesion setUsuarioActual={setUsuarioActual} />} />
           </Routes>
         </div>
       </Router>

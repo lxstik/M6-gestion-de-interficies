@@ -6,10 +6,15 @@ function Registro() {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [imagen, setImagen] = useState('');
 
   function RegistroFuncion(event) {
     event.preventDefault();
-    RegistrarUsuario(nombre, email, password);
+
+    // Registrar el nuevo usuario con los datos del formulario
+    RegistrarUsuario(nombre, email, password, imagen);
+
+    // Obtener y mostrar los usuarios actualizados
     const usuarios = obtenerUsuarios();
     console.log(usuarios);
   }
@@ -50,13 +55,22 @@ function Registro() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            <div className="mb-3">
+              <label htmlFor="imagen" className="form-label">URL de la Imagen</label>
+              <input
+                type="text"
+                className="form-control"
+                id="imagen"
+                value={imagen}
+                onChange={(e) => setImagen(e.target.value)}
+              />
+            </div>
             <input type="submit" className="mt-4 w-100 btn btn-primary" value="Registrar" id="enviar" />
           </form>
         </div>
       </main>
 
       {/* Modal */}
-      
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">

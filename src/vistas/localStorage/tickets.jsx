@@ -7,7 +7,8 @@ const dades_tiquets = [
         ordenador: "PC3",
         descripcion: "Error de impresora",
         alumno: "Ana Martínez",
-        estado: "no resuelto"
+        estado: "no resuelto",
+        comentarios: []
     },
     {
         codigo: 123460,
@@ -17,7 +18,8 @@ const dades_tiquets = [
         ordenador: "PC4",
         descripcion: "Problema de acceso a archivos",
         alumno: "Pedro Gómez",
-        estado: "no resuelto"
+        estado: "no resuelto",
+        comentarios: []
     },
     {
         codigo: 123461,
@@ -27,7 +29,8 @@ const dades_tiquets = [
         ordenador: "PC1",
         descripcion: "Aplicación se cierra inesperadamente",
         alumno: "Sofía Fernández",
-        estado: "no resuelto"
+        estado: "no resuelto",
+        comentarios: []
     },
     {
         codigo: 123462,
@@ -37,7 +40,8 @@ const dades_tiquets = [
         ordenador: "PC2",
         descripcion: "Problema de conexión a la red",
         alumno: "Luis Torres",
-        estado: "no resuelto"
+        estado: "no resuelto",
+        comentarios: []
     },
     {
         codigo: 123463,
@@ -47,7 +51,8 @@ const dades_tiquets = [
         ordenador: "PC3",
         descripcion: "Archivos corruptos",
         alumno: "Carolina Ramírez",
-        estado: "no resuelto"
+        estado: "no resuelto",
+        comentarios: []
     },
     {
         codigo: 123457,
@@ -58,7 +63,8 @@ const dades_tiquets = [
         ordenador: "PC1",
         descripcion: "Problema de conexión a Internet",
         alumno: "Maria López",
-        estado: "resuelto"
+        estado: "resuelto",
+        comentarios: []
     },
     {
         codigo: 123458,
@@ -69,7 +75,8 @@ const dades_tiquets = [
         ordenador: "PC2",
         descripcion: "Pantalla en blanco",
         alumno: "Juan Rodríguez",
-        estado: "resuelto"
+        estado: "resuelto",
+        comentarios: []
     },
     {
         codigo: 123459,
@@ -80,11 +87,14 @@ const dades_tiquets = [
         ordenador: "PC3",
         descripcion: "Error de impresora",
         alumno: "Ana Martínez",
-        estado: "resuelto"
+        estado: "resuelto",
+        comentarios: []
     }
 ];
 
+// Cargar los datos en localStorage si no existen
+if (!localStorage.getItem('dades_tiquets')) {
+    localStorage.setItem('dades_tiquets', JSON.stringify(dades_tiquets));
+}
+
 export default dades_tiquets;
-
-
-// const ticketsLocal = localStorage.setItem('tickets', JSON.stringify([]))
