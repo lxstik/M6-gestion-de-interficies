@@ -3,11 +3,13 @@ import TicketsPendientes from './localStorage/TicketsPendientes'; // Importació
 import TicketsResueltos from './localStorage/TicketsResueltos'; // Importación correcta
 
 function Panel() {
+  //por defecto el usuario actual es null
   const [usuarioActual, setUsuarioActual] = useState(null);
 
+  //obtener el usuario actual desde localStorage
   useEffect(() => {
-    // Obtener el usuario actual desde localStorage
     const usuario = JSON.parse(localStorage.getItem('usuarioActual'));
+    //establecerlo en el estado
     setUsuarioActual(usuario);
   }, []);
 
@@ -23,16 +25,16 @@ function Panel() {
                 className="rounded-circle me-3"
                 style={{ width: '50px', height: '50px', objectFit: 'cover' }}
               />
-              <h1>Bienvenido, {usuarioActual.nombre}</h1>
+              <h1>Привет, {usuarioActual.nombre}</h1>
             </>
           )}
         </div>
 
-        {/* Componente para tickets pendientes */}
-        <TicketsPendientes />
 
-        {/* Componente para tickets resueltos */}
+        <TicketsPendientes />
         <TicketsResueltos />
+
+        
       </main>
 
       {/* Modal */}

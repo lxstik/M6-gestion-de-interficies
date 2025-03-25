@@ -3,50 +3,50 @@ import { Comentario } from './Comentario';
 import { useParams, useNavigate } from 'react-router-dom';
 
 export const Comentarios = () => {
-    const { id } = useParams(); // Obtiene el ID del ticket desde la URL
-    const navigate = useNavigate(); // Para manejar la navegación (botón "Volver")
+    //obtengo la id del ticket a través del enlace
+    const { id } = useParams();
+    //hago que el boton de volver sea funcional
+    const navigate = useNavigate();
+    //defino los estados para los comentarios y el ticket
     const [comentarios, setComentarios] = useState([]);
-    const [ticket, setTicket] = useState(null); // Almacena el ticket actual
+    //almaceno el ticket actual
+    const [ticket, setTicket] = useState(null);
 
     useEffect(() => {
-        // Cargar los tickets desde localStorage
+        // voy cargando los tickets guardados en localStorage
         const ticketsGuardados = JSON.parse(localStorage.getItem("dades_tiquets")) || [];
-        const ticketEntrado = ticketsGuardados.find(ticket => String(ticket.codigo) === String(id)); // Comparación como strings
+        //busco el ticket con el id que me ha llegado por parámetro y lo guardo en ticketEntrado
+        const ticketEntrado = ticketsGuardados.find(ticket => String(ticket.codigo) === String(id));
 
+        //en el caso de que el ticket exista, lo guardo en el estado
         if (ticketEntrado) {
             setTicket(ticketEntrado);
+            //si el ticket tiene comentarios, los guardo en el estado también
             setComentarios(ticketEntrado.comentarios || []);
-        } else {
-            console.error(`Ticket con código ${id} no encontrado.`);
         }
     }, [id]);
 
+    
+
+    //la función para actualizar los comentarios
     const actualizarComentarios = (nuevoComentario) => {
+        // agrego el nuevo comentario al array de comentarios
         const comentariosActualizados = [...comentarios, nuevoComentario];
+        //actualizo los comentarios en el estado
         setComentarios(comentariosActualizados);
     
-        // Actualizar el ticket en localStorage
+        // ahora actualizo los comentarios en el ticket
         const ticketsGuardados = JSON.parse(localStorage.getItem("dades_tiquets")) || [];
-        const ticketsActualizados = ticketsGuardados.map(ticket =>
-            String(ticket.codigo) === String(id) ? { ...ticket, comentarios: comentariosActualizados } : ticket
-        );
-        localStorage.setItem("dades_tiquets", JSON.stringify(ticketsActualizados));
+        //busco el ticket con el id que me ha pasado y lo guardo en ticketIndex
+        const ticketIndex = ticketsGuardados.findIndex(ticket => String(ticket.codigo) === String(id));
     
-        // Actualizar el ticket actual en el estado
-        const ticketActualizado = ticketsActualizados.find(ticket => String(ticket.codigo) === String(id));
-        setTicket(ticketActualizado);
+        //en el caso de que el ticket exista, actualizo los comentarios, guardo los cambios en localStorage y actualizo el estado
+        if (ticketIndex !== -1) {
+            ticketsGuardados[ticketIndex].comentarios = comentariosActualizados;
+            localStorage.setItem("dades_tiquets", JSON.stringify(ticketsGuardados));
+            setTicket(ticketsGuardados[ticketIndex]);
+        }
     };
-
-    if (!ticket) {
-        return (
-            <div className="container mt-5">
-                <h1>Ticket no encontrado</h1>
-                <button className="btn btn-secondary" onClick={() => navigate(-1)}>
-                    Volver
-                </button>
-            </div>
-        );
-    }
 
     return (
         <>

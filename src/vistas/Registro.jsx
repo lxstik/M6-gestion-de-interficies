@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import localStorageFunction, { RegistrarUsuario, obtenerUsuarios } from "./localStorage/functions";
+//guardar datos, recuperar datos, filtrar tickets, mostrar datos por consola
 localStorageFunction();
 
+
 function Registro() {
+  //definir los estados para los campos del formulario, por defecto están vacíos
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [imagen, setImagen] = useState('');
 
   function RegistroFuncion(event) {
+    //evita que formulario me recargue la página
     event.preventDefault();
 
-    // Registrar el nuevo usuario con los datos del formulario
+    //registra el usuario con los datos introducidos
     RegistrarUsuario(nombre, email, password, imagen);
 
-    // Obtener y mostrar los usuarios actualizados
+    //obtiene los usuarios ya registrados y muestra por consola
     const usuarios = obtenerUsuarios();
     console.log(usuarios);
   }

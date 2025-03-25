@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
-// Función para obtener los tickets desde localStorage
+// parseo los tickets, para que se muestren en la tabla
 const obtenerTickets = () => {
     return JSON.parse(localStorage.getItem('dades_tiquets')) || [];
 };
 
-// Función para eliminar un ticket
+//funcion que me permite eliminar un ticket
 const eliminarTicket = (codigo, setTicketsResueltos) => {
+    //obtengo los tickets
     const tickets = obtenerTickets();
+    //filtro los tickets para que no me muestre el ticket que quiero eliminar
     const ticketsActualizados = tickets.filter(ticket => ticket.codigo !== codigo);
+    //guardo los tickets actualizados en localStorage
     localStorage.setItem('dades_tiquets', JSON.stringify(ticketsActualizados));
+    //actualizo el estado de los tickets
     setTicketsResueltos(ticketsActualizados.filter(ticket => ticket.estado === 'resuelto'));
 };
 
+//funcion para resolver un ticket
 const TicketsResueltos = () => {
+    //defino el estado de los tickets resueltos
     const [ticketsResueltos, setTicketsResueltos] = useState([]);
 
+    //obtengo los tickets resueltos
     useEffect(() => {
         const tickets = obtenerTickets().filter(ticket => ticket.estado === 'resuelto');
+        //actualizo el estado de los tickets resueltos
         setTicketsResueltos(tickets);
     }, []);
 
@@ -51,7 +59,6 @@ const TicketsResueltos = () => {
                             <td>{ticket.alumno}</td>
                             <td>
                                 
-                                {/* Botón para eliminar el ticket */}
                                 <button
                                     className="btn btn-danger"
                                     onClick={() => eliminarTicket(ticket.codigo, setTicketsResueltos)}

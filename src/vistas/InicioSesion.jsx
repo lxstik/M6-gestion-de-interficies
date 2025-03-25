@@ -2,11 +2,15 @@ import React, { useState } from 'react';
 import { ComprobarUsuario } from './localStorage/functions';
 
 function InicioSesion({ setUsuarioActual }) {
+  //definir los estados para los campos del formulario, por defecto están vacíos
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
+  //funcion para comprobar el usuario
   function handleLogin(event) {
+    //evita que formulario me recargue la pagina
     event.preventDefault();
+    //comprueba el usuario con los datos introducidos
     ComprobarUsuario(email, password, setUsuarioActual);
   }
 

@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-// Función para obtener los tickets desde localStorage
+//funcion que me permite obtener los tickets
 const obtenerTickets = () => {
+    //parseo para que se muestren en la tabla
     return JSON.parse(localStorage.getItem('dades_tiquets')) || [];
 };
 
-// Función para eliminar un ticket
-const eliminarTicket = (codigo, setTicketsPendientes) => {
+//funcion que me permite eliminar un ticket
+const eliminarTicket = (codigo, setTicketsResueltos) => {
+    //obtengo los tickets
     const tickets = obtenerTickets();
+    //filtro los tickets para que no me muestre el ticket que quiero eliminar
     const ticketsActualizados = tickets.filter(ticket => ticket.codigo !== codigo);
+    //guardo los tickets actualizados en localStorage
     localStorage.setItem('dades_tiquets', JSON.stringify(ticketsActualizados));
-    setTicketsPendientes(ticketsActualizados.filter(ticket => ticket.estado === 'no resuelto'));
+    //actualizo el estado de los tickets
+    setTicketsResueltos(ticketsActualizados.filter(ticket => ticket.estado === 'resuelto'));
 };
 
-// Función para resolver un ticket
+//funcion para resolver un ticket
 const resolverTicket = (codigo, setTicketsPendientes) => {
+    //obtengo los tickets
     const tickets = obtenerTickets();
+    //actualizo el estado del ticket a resuelto y guardo la fecha de resolución en el ticket
     const ticketsActualizados = tickets.map(ticket =>
         ticket.codigo === codigo ? { ...ticket, estado: 'resuelto', fechaResolucion: new Date().toLocaleDateString() } : ticket
     );
@@ -24,11 +31,16 @@ const resolverTicket = (codigo, setTicketsPendientes) => {
     setTicketsPendientes(ticketsActualizados.filter(ticket => ticket.estado === 'no resuelto'));
 };
 
+//funcion para mostrar los tickets pendientes
 const TicketsPendientes = () => {
+    //por defecto el estado de los tickets pendientes esta vacio
     const [ticketsPendientes, setTicketsPendientes] = useState([]);
 
+    //obtengo los tickets pendientes
     useEffect(() => {
+        //parseo los tickets para que se muestren en la tabla
         const tickets = obtenerTickets().filter(ticket => ticket.estado === 'no resuelto');
+        //actualizo el estado de los tickets pendientes
         setTicketsPendientes(tickets);
     }, []);
 
@@ -61,21 +73,18 @@ const TicketsPendientes = () => {
                             <td>{ticket.alumno}</td>
                             <td>
                                 <div className="d-flex">
-                                    {/* Botón para resolver el ticket */}
                                     <button
                                         className="btn btn-success btn-sm me-2"
                                         onClick={() => resolverTicket(ticket.codigo, setTicketsPendientes)}
                                     >
                                         Resolver
                                     </button>
-                                    {/* Botón para eliminar el ticket */}
                                     <button
                                         className="btn btn-danger btn-sm me-2"
                                         onClick={() => eliminarTicket(ticket.codigo, setTicketsPendientes)}
                                     >
                                         Eliminar
                                     </button>
-                                    {/* Botón para añadir comentario */}
                                     <button
                                         className="btn btn-warning btn-sm me-2"
                                         title="Añadir comentario"
@@ -84,7 +93,6 @@ const TicketsPendientes = () => {
                                     >
                                         Añadir comentario
                                     </button>
-                                    {/* Botón para ver comentarios */}
                                     <Link to={`../comentarios/${ticket.codigo}`}>
                                         <button
                                             className="btn btn-info btn-sm"
