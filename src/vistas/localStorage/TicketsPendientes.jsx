@@ -58,7 +58,6 @@ const TicketsPendientes = () => {
                         <th>Descripción</th>
                         <th>Alumno</th>
                         <th>Acciones</th>
-                        <th>Comentarios</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,28 +78,22 @@ const TicketsPendientes = () => {
                                     >
                                         Resolver
                                     </button>
+                                    <Link to={`../comentarios/${ticket.codigo}`}>
+                                        <button
+                                            className="btn btn-info btn-sm"
+                                            title="Ver comentarios"
+                                            style={{ margin: '0px 7px 0px 0px'
+                                             }}
+                                        >
+                                            Ver comentarios
+                                        </button>
+                                    </Link>
                                     <button
                                         className="btn btn-danger btn-sm me-2"
                                         onClick={() => eliminarTicket(ticket.codigo, setTicketsPendientes)}
                                     >
                                         Eliminar
                                     </button>
-                                    <button
-                                        className="btn btn-warning btn-sm me-2"
-                                        title="Añadir comentario"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal"
-                                    >
-                                        Añadir comentario
-                                    </button>
-                                    <Link to={`../comentarios/${ticket.codigo}`}>
-                                        <button
-                                            className="btn btn-info btn-sm"
-                                            title="Ver comentarios"
-                                        >
-                                            Ver comentarios
-                                        </button>
-                                    </Link>
                                 </div>
                             </td>
                         </tr>

@@ -11,6 +11,8 @@ export const Comentarios = () => {
     const [comentarios, setComentarios] = useState([]);
     //almaceno el ticket actual
     const [ticket, setTicket] = useState(null);
+    //obtengo el usuario actual del localStorage
+    const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual")) || { rol: "Usuario" };
 
     useEffect(() => {
         // voy cargando los tickets guardados en localStorage
@@ -48,6 +50,23 @@ export const Comentarios = () => {
         }
     };
 
+    //la función para borrar un comentario
+    const borrarComentario = (index) => {
+        //elimino el comentario del array
+        const comentariosActualizados = comentarios.filter((_, i) => i !== index);
+        setComentarios(comentariosActualizados);
+
+        //actualizo los comentarios en el ticket
+        const ticketsGuardados = JSON.parse(localStorage.getItem("dades_tiquets")) || [];
+        const ticketIndex = ticketsGuardados.findIndex(ticket => String(ticket.codigo) === String(id));
+
+        if (ticketIndex !== -1) {
+            ticketsGuardados[ticketIndex].comentarios = comentariosActualizados;
+            localStorage.setItem("dades_tiquets", JSON.stringify(ticketsGuardados));
+            setTicket(ticketsGuardados[ticketIndex]);
+        }
+    };
+
     return (
         <>
             <main className="container mt-5">
@@ -69,6 +88,14 @@ export const Comentarios = () => {
                                     <div className="card-body">
                                         <p>{comentario.coment}</p>
                                         <p className="small text-end">Fecha: {comentario.fechaActual}</p>
+                                        {usuarioActual.rol === "admin" && (
+                                            <button
+                                                className="btn btn-danger btn-sm"
+                                                onClick={() => borrarComentario(index)}
+                                            >
+                                                Borrar
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             ))

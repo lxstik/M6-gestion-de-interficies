@@ -63,5 +63,17 @@ const  dades_usuaris = [
         imagen: "https://randomuser.me/api/portraits/women/8.jpg",
         rol: "alumno"
     },
+    {
+        id: "12",
+        nombre: "YehorAdmin",
+        correo: "falego@ipm.cat",
+        contrasenya: "12345",
+        imagen: "https://img.png",
+        rol: "admin"
+    },
 ];
+
+if (!localStorage.getItem('dades_tiquets')) {
+    localStorage.setItem('dades_tiquets', JSON.stringify(dades_tiquets));
+}
 export default dades_usuaris;

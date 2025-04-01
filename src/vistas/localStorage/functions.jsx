@@ -85,12 +85,10 @@ export function obtenerUsuarios() {
 
 //funcion para mantener el usuario actual "pendiente"
 export function RecuperarUsuario(setUsuarioActual) {
-    const usuario = localStorage.getItem('usuarioActual');
+    const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
     if (usuario) {
-        const usuarioObj = JSON.parse(usuario);
-        setUsuarioActual(usuarioObj.nombre);
+        setUsuarioActual(usuario);
     }
 }
-
 
 export { noResueltos, resueltos, usuarioActual, fotoUsuarioActual };

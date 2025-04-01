@@ -4,19 +4,22 @@ import Panel from './vistas/Panel';
 import InicioSesion from './vistas/InicioSesion';
 import Registro from './vistas/Registro';
 import Comentarios from './vistas/Comentarios';
+import PanelAdmin from './vistas/PanelAdmin';
 import './styles/bootstrap.scss';
 import { RecuperarUsuario } from './vistas/localStorage/functions';
 import CrearTicket from './vistas/CrearTicket';
 
 function App() {
-  const [usuarioActual, setUsuarioActual] = useState(null);
+  const [usuarioActual, setUsuarioActual] = useState({});
 
-  //al cargar la página se recupera el usuario actual del localStorage
+  // Al cargar la página se recupera el usuario actual del localStorage
   useEffect(() => {
     RecuperarUsuario(setUsuarioActual);
+    const usuario = JSON.parse(localStorage.getItem("usuarioActual"));
+    console.log("Usuario actual al cargar:", usuario);
   }, []);
 
-  //al cerrar la sesión se anula el usuario actual del localStorage
+  // Al cerrar la sesión se anula el usuario actual del localStorage
   function cerrarSesion() {
     setUsuarioActual(null);
     localStorage.removeItem('usuarioActual');
@@ -30,11 +33,15 @@ function App() {
             <div className="container-fluid">
               <a className="navbar-brand">Gestión de incidencias FPLLEFIA</a>
               <div>
-                { /* si existe el usuario se muestran los botones */}
                 {usuarioActual ? (
                   <>
                     <Link to="/Panel" className="btn btn-secondary ms-2">PANEL</Link>
-                    <Link to="/crear-ticket" className="btn btn-secondary ms-2">CREAR TICKET</Link> 
+                    <Link to="/crear-ticket" className="btn btn-secondary ms-2">CREAR TICKET</Link>
+                    {console.log("Usuario actual en render:", usuarioActual)}
+                    {console.log("Rol del usuario:", usuarioActual?.rol?.toLowerCase())}
+                    {usuarioActual?.rol?.toLowerCase() === "admin" && (
+                      <Link to="/admin-panel" className="btn btn-danger ms-2">PANEL ADMIN</Link>
+                    )}
                   </>
                 ) : (
                   <>
@@ -63,6 +70,7 @@ function App() {
             <Route path="/Registro" element={!usuarioActual ? <Registro /> : <Panel />} />
             <Route path="/comentarios/:id" element={usuarioActual ? <Comentarios /> : <InicioSesion setUsuarioActual={setUsuarioActual} />} />
             <Route path="/crear-ticket" element={<CrearTicket />} />
+            <Route path="/admin-panel" element={<PanelAdmin />} />
           </Routes>
         </div>
       </Router>

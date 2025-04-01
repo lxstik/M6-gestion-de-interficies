@@ -92,9 +92,4 @@ const dades_tiquets = [
     }
 ];
 
-// Cargar los datos en localStorage si no existen
-if (!localStorage.getItem('dades_tiquets')) {
-    localStorage.setItem('dades_tiquets', JSON.stringify(dades_tiquets));
-}
-
 export default dades_tiquets;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // parseo los tickets, para que se muestren en la tabla
 const obtenerTickets = () => {
@@ -17,7 +18,7 @@ const eliminarTicket = (codigo, setTicketsResueltos) => {
     setTicketsResueltos(ticketsActualizados.filter(ticket => ticket.estado === 'resuelto'));
 };
 
-//funcion para resolver un ticket
+//funcion para mostrar los tickets resueltos
 const TicketsResueltos = () => {
     //defino el estado de los tickets resueltos
     const [ticketsResueltos, setTicketsResueltos] = useState([]);
@@ -58,14 +59,24 @@ const TicketsResueltos = () => {
                             <td>{ticket.descripcion}</td>
                             <td>{ticket.alumno}</td>
                             <td>
-                                
+                                <Link to={`../comentarios/${ticket.codigo}`}>
+                                    <button
+                                        className="btn btn-info btn-sm"
+                                        title="Ver comentarios"
+                                    >
+                                        Ver comentarios
+                                    </button>
+                                </Link>
+                            </td>
+                            <td>
                                 <button
-                                    className="btn btn-danger"
+                                    className="btn btn-danger btn-sm"
                                     onClick={() => eliminarTicket(ticket.codigo, setTicketsResueltos)}
                                 >
                                     Eliminar
                                 </button>
                             </td>
+
                         </tr>
                     ))}
                 </tbody>
