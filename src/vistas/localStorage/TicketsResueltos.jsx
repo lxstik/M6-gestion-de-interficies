@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-// parseo los tickets, para que se muestren en la tabla
-const obtenerTickets = () => {
-    return JSON.parse(localStorage.getItem('dades_tiquets')) || [];
-};
+import { obtenerTiquets } from './functions';
 
 //funcion que me permite eliminar un ticket
 const eliminarTicket = (codigo, setTicketsResueltos) => {
     //obtengo los tickets
-    const tickets = obtenerTickets();
+    const tickets = obtenerTiquets();
     //filtro los tickets para que no me muestre el ticket que quiero eliminar
     const ticketsActualizados = tickets.filter(ticket => ticket.codigo !== codigo);
     //guardo los tickets actualizados en localStorage
@@ -25,7 +21,7 @@ const TicketsResueltos = () => {
 
     //obtengo los tickets resueltos
     useEffect(() => {
-        const tickets = obtenerTickets().filter(ticket => ticket.estado === 'resuelto');
+        const tickets = obtenerTiquets().filter(ticket => ticket.estado === 'resuelto');
         //actualizo el estado de los tickets resueltos
         setTicketsResueltos(tickets);
     }, []);
@@ -76,7 +72,6 @@ const TicketsResueltos = () => {
                                     Eliminar
                                 </button>
                             </td>
-
                         </tr>
                     ))}
                 </tbody>

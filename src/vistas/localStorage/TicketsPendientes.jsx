@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
-//funcion que me permite obtener los tickets
-const obtenerTickets = () => {
-    //parseo para que se muestren en la tabla
-    return JSON.parse(localStorage.getItem('dades_tiquets')) || [];
-};
+import { obtenerTiquets } from './functions';
 
 //funcion que me permite eliminar un ticket
 const eliminarTicket = (codigo, setTicketsResueltos) => {
     //obtengo los tickets
-    const tickets = obtenerTickets();
+    const tickets = obtenerTiquets();
     //filtro los tickets para que no me muestre el ticket que quiero eliminar
     const ticketsActualizados = tickets.filter(ticket => ticket.codigo !== codigo);
     //guardo los tickets actualizados en localStorage
@@ -22,7 +17,7 @@ const eliminarTicket = (codigo, setTicketsResueltos) => {
 //funcion para resolver un ticket
 const resolverTicket = (codigo, setTicketsPendientes) => {
     //obtengo los tickets
-    const tickets = obtenerTickets();
+    const tickets = obtenerTiquets();
     //actualizo el estado del ticket a resuelto y guardo la fecha de resolución en el ticket
     const ticketsActualizados = tickets.map(ticket =>
         ticket.codigo === codigo ? { ...ticket, estado: 'resuelto', fechaResolucion: new Date().toLocaleDateString() } : ticket
@@ -39,7 +34,7 @@ const TicketsPendientes = () => {
     //obtengo los tickets pendientes
     useEffect(() => {
         //parseo los tickets para que se muestren en la tabla
-        const tickets = obtenerTickets().filter(ticket => ticket.estado === 'no resuelto');
+        const tickets = obtenerTiquets().filter(ticket => ticket.estado === 'no resuelto');
         //actualizo el estado de los tickets pendientes
         setTicketsPendientes(tickets);
     }, []);

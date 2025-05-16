@@ -1,3 +1,5 @@
+import dades_tiquets from './tickets';
+
 const  dades_usuaris = [
     {
         id: "1",
@@ -73,7 +75,11 @@ const  dades_usuaris = [
     },
 ];
 
+if (!localStorage.getItem('dades_usuaris')) {
+    localStorage.setItem('dades_usuaris', JSON.stringify(dades_usuaris));
+}
 if (!localStorage.getItem('dades_tiquets')) {
     localStorage.setItem('dades_tiquets', JSON.stringify(dades_tiquets));
 }
+
 export default dades_usuaris;
