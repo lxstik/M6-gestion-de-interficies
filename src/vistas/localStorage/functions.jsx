@@ -93,4 +93,9 @@ export function RecuperarUsuario(setUsuarioActual) {
     }
 }
 
+// NUEVA FUNCIÓN para obtener los tickets de localStorage de forma segura
+export function obtenerTiquets() {
+    return JSON.parse(localStorage.getItem('dades_tiquets')) || [];
+}
+
 export { noResueltos, resueltos, usuarioActual, fotoUsuarioActual };
