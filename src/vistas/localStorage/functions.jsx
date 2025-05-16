@@ -10,9 +10,11 @@ let fotoUsuarioActual = null;
 //funcion para guardar los datos en localStorage
 export default function localStorageFunction() {
     // si no existen los datos en localStorage, los guardo
-    if (!localStorage.getItem("dades_tiquets") || !localStorage.getItem("dades_usuaris")) {
-        localStorage.setItem("dades_tiquets", JSON.stringify(dades_tiquets));
-        localStorage.setItem("dades_usuaris", JSON.stringify(dades_usuaris));
+    if (!localStorage.getItem("dades_tiquets")) {
+        localStorage.setItem("dades_tiquets", JSON.stringify([]));
+    }
+    if (!localStorage.getItem("dades_usuaris")) {
+        localStorage.setItem("dades_usuaris", JSON.stringify([]));
     }
 
     //saco los datos de localStorage y los asigno a las variables
