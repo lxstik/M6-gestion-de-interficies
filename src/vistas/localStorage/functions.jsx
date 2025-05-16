@@ -1,4 +1,4 @@
-import dades_tiquets from './tickets';
+// import dades_tiquets from './tickets'; // Elimina esta línea, no es necesaria
 import dades_usuaris from './usuarios';
 
 //defino las variables, por defecto son vacias
